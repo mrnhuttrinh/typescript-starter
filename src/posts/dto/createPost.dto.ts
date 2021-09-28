@@ -1,4 +1,12 @@
-export default class CreatePostDto {
+import { IsString, IsNotEmpty, IsNumber, IsOptional } from 'class-validator';
+export class CreatePostDto {
+  @IsString()
+  @IsNotEmpty()
+  @IsOptional()
   content: string;
+
+  @IsString()
+  @IsNotEmpty()
+  @IsOptional()
   title: string;
 }
