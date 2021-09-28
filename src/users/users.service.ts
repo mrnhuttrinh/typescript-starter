@@ -1,13 +1,14 @@
 import { HttpException, HttpStatus, Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
+import Address from './address.entity';
 import CreateUserDto from './dto/createUser.dto';
 import User from './user.entity';
 
 @Injectable()
 export class UsersService {
   constructor(
-    @InjectRepository(User) private usersRepository: Repository<User>,
+    @InjectRepository(User) private usersRepository: Repository<User>, // private addressRepository: Repository<Address>,
   ) {}
 
   async getByEmail(email: string) {
@@ -37,4 +38,8 @@ export class UsersService {
       HttpStatus.NOT_FOUND,
     );
   }
+
+  // getAllAddressesWithUsers() {
+  //   return this.addressRepository.find({ relations: ['user'] });
+  // }
 }

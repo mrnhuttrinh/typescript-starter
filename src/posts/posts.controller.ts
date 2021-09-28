@@ -8,6 +8,8 @@ import {
   Post,
   UseGuards,
   UseFilters,
+  SerializeOptions,
+  Req,
 } from '@nestjs/common';
 import PostsService from './posts.service';
 import { CreatePostDto } from './dto/createPost.dto';
@@ -16,8 +18,13 @@ import JwtAuthenticationGuard from '../authentication/jwt-authentication.guard';
 import { ExceptionsLoggerFilter } from 'src/utils/exceptionsLogger.filter';
 import { HttpExceptionFilter } from 'src/utils/httpException.filter';
 import { FindOneParams } from 'src/utils/findOneParams';
+import User from 'src/users/user.entity';
+import RequestWithUser from 'src/authentication/requestWithUser.interface';
 
 @Controller('posts')
+@SerializeOptions({
+  strategy: 'excludeAll',
+})
 export default class PostsController {
   constructor(private readonly postsService: PostsService) {}
 
@@ -35,8 +42,8 @@ export default class PostsController {
 
   @Post()
   @UseGuards(JwtAuthenticationGuard)
-  async createPost(@Body() post: CreatePostDto) {
-    return this.postsService.createPost(post);
+  async createPost(@Body() post: CreatePostDto, @Req() req: RequestWithUser) {
+    return this.postsService.createPost(post, req.user);
   }
 
   @Put(':id')

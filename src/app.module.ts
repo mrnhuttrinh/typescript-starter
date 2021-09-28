@@ -4,6 +4,7 @@ import { PostsModule } from './posts/posts.module';
 import { ConfigModule } from '@nestjs/config';
 import { DatabaseModule } from './database/database.module';
 import { UsersModule } from './users/users.module';
+import { CategoriesModule } from './categories/categories.module';
 import { AuthenticationModule } from './authentication/authentication.module';
 import { APP_FILTER } from '@nestjs/core';
 import { ExceptionsLoggerFilter } from './utils/exceptionsLogger.filter';
@@ -26,6 +27,7 @@ import { ExceptionsLoggerFilter } from './utils/exceptionsLogger.filter';
     PostsModule,
     UsersModule,
     AuthenticationModule,
+    CategoriesModule,
   ],
   controllers: [],
   providers: [

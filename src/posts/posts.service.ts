@@ -6,6 +6,7 @@ import Post from './post.entity';
 import { UpdatePostDto } from './dto/updatePost.dto';
 import { Repository } from 'typeorm';
 import { PostNotFoundException } from './exception/postNotFund.exception';
+import User from 'src/users/user.entity';
 
 @Injectable()
 export default class PostsService {
@@ -14,11 +15,13 @@ export default class PostsService {
   ) {}
 
   getAllPosts() {
-    return this.postsRepository.find();
+    return this.postsRepository.find({ relations: ['author'] });
   }
 
   async getPostById(id: number) {
-    const post = await this.postsRepository.findOne(id);
+    const post = await this.postsRepository.findOne(id, {
+      relations: ['author'],
+    });
     if (post) {
       return post;
     }
@@ -34,8 +37,11 @@ export default class PostsService {
     throw new HttpException('Post not found', HttpStatus.NOT_FOUND);
   }
 
-  async createPost(post: CreatePostDto) {
-    const newPost = await this.postsRepository.create(post);
+  async createPost(post: CreatePostDto, user: User) {
+    const newPost = await this.postsRepository.create({
+      ...post,
+      author: user,
+    });
     await this.postsRepository.save(newPost);
     return newPost;
   }
