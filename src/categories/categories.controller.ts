@@ -14,7 +14,7 @@ import CategoriesService from './categories.service';
 import CreateCategoryDto from './dto/createCategory.dto';
 import UpdateCategoryDto from './dto/updateCategory.dto';
 import JwtAuthenticationGuard from '../authentication/jwt-authentication.guard';
-import { FindOneParams } from 'src/utils/findOneParams';
+import { FindOneParams } from '../utils/findOneParams';
 
 @Controller('categories')
 @UseInterceptors(ClassSerializerInterceptor)
