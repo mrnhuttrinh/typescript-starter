@@ -6,23 +6,21 @@ import {
   OneToOne,
   PrimaryGeneratedColumn,
 } from 'typeorm';
-import { Exclude, Expose } from 'class-transformer';
+import { Exclude } from 'class-transformer';
 import Address from './address.entity';
 import Post from '../posts/post.entity';
 import PublicFile from 'src/files/publicFile.entity';
+import PrivateFile from 'src/privateFiles/privateFile.entity';
 
 @Entity()
 class User {
   @PrimaryGeneratedColumn()
-  @Expose()
   public id: number;
 
   @Column({ unique: true })
-  @Expose()
   public email: string;
 
   @Column()
-  @Expose()
   public name: string;
 
   @Column()
@@ -34,11 +32,9 @@ class User {
     cascade: true,
   })
   @JoinColumn()
-  @Expose()
   public address: Address;
 
   @OneToMany(() => Post, (post: Post) => post.author)
-  @Expose()
   public posts: Post[];
 
   @JoinColumn()
@@ -46,8 +42,10 @@ class User {
     eager: true,
     nullable: true,
   })
-  @Expose()
   public avatar?: PublicFile;
+
+  @OneToMany(() => PrivateFile, (file: PrivateFile) => file.owner)
+  public files: PrivateFile[];
 }
 
 export default User;
