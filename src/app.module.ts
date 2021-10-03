@@ -9,6 +9,7 @@ import { AuthenticationModule } from './authentication/authentication.module';
 import { APP_FILTER } from '@nestjs/core';
 import { ExceptionsLoggerFilter } from './utils/exceptionsLogger.filter';
 import { FilesModule } from './files/files.module';
+import { SearchModule } from './search/search.module';
 
 @Module({
   imports: [
@@ -34,6 +35,7 @@ import { FilesModule } from './files/files.module';
     AuthenticationModule,
     CategoriesModule,
     FilesModule,
+    SearchModule,
   ],
   controllers: [],
   providers: [
